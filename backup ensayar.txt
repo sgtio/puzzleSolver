@@ -1,0 +1,42 @@
+if (iteraciones <= 33) {
+			iteraciones++;
+			while (!exito && i<4 && j<4){
+				if (movPos.contains(nextMovimiento)) {
+					p.mover(nextMovimiento);
+					if (p.igual(solucion)){
+						exito = true;
+					}
+					else {
+						//Buscamos si el tablero ya se ha explorado
+						for (Puzzle pz: tableros) {
+							if(p.igual(pz)) {
+//								tableros.remove(tableros.size()-1);
+								//Deshacemos el movimiento
+								p = p.deshacerMovimiento(nextMovimiento);
+								return false;
+							}
+						}
+						tableros.add(p);
+						movPos = p.movimientosPosibles();
+//						for(int j = 0; j<movPosChild.size(); j++) {
+							exito = ensayar(p, movimientos.get(j), solucion);
+							if (!exito) {
+//								if (j==3)
+//									p = p.deshacerMovimiento(nextMovimiento);
+								iteraciones--;
+								j++;
+								nextMovimiento = movimientos.get(j);
+								continue;
+							}
+//						}
+//						i++;
+					}
+				}
+//				if(i==3) {
+//					p = p.deshacerMovimiento(nextMovimiento);
+//					return false;
+//				}
+				i++;
+				nextMovimiento = movimientos.get(i);
+			}
+		}
